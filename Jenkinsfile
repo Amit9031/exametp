@@ -25,7 +25,7 @@ pipeline{
      stage("testing"){
       steps{
         echo "testing the application"
-        sh "curl http://localhost:3000"
+        sh "curl http://localhost:8000"
       }
     }
   }
