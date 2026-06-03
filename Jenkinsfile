@@ -1,25 +1,26 @@
 pipeline{
   agent any
   stages{
+    stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Amit9031/pythonexam.git'
+            }
+        }
+
     stage('build'){
       steps{
-        echo "building the image"
-        sh "docker build -t nodeapp:latest ."
+        sh 'docker build -t pythonapp:latest . '
       }
     }
-    stage("running"){
+    stage('run'){
       steps{
-        echo "running the continer"
-        sh 
-        '''
-        docker stop nodeapp || true
-        docker rm nodeapp || true
-        docker run -d -p 3000:3000 --name nodeapp -e etp=dev nodeapp:latest
+        sh '''
+        docker stop pythonapp || true
+        docker rm pythonapp || true
 
-
+          docker run -d -p 5000:5000 --name pythonapp pythonapp:latest
         '''
       }
     }
   }
-
 }
