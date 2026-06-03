@@ -1,27 +1,28 @@
-pipeline{
-  agent any
-  stages{
-    stage('Checkout') {
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Amit9031/pythonexam.git'
+                git branch: 'main', url: 'https://github.com/Amit9031/jen.git'
             }
         }
 
-    stage('build'){
-      steps{
-        sh 'docker build -t pythonapp:latest . '
-      }
-    }
-    stage('run'){
-      steps{
-        sh '''
-        docker stop pythonapp || true
-        docker rm pythonapp || true
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t myapp .'
+            }
+        }
 
-          docker run -d -p 3000:3000 -e exam=etp --name pythonapp pythonapp:latest
-        '''
-      }
+        stage('Run Container') {
+            steps {
+                sh '''
+                docker stop myapp || true
+                docker rm myapp || true
+                docker run --name myapp myapp
+                '''
+            }
+        }
     }
-     
-  }
 }
