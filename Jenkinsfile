@@ -18,7 +18,7 @@ pipeline{
         docker stop pythonapp || true
         docker rm pythonapp || true
 
-          docker run -d -p 5000:5000 --name pythonapp pythonapp:latest
+          docker run -d -p 5000:5000 -e exam=etp --name pythonapp pythonapp:latest
         '''
       }
     }
