@@ -9,7 +9,7 @@ pipeline{
 
     stage('build'){
       steps{
-        sh 'docker build -t pythonapp:latest . '
+        sh 'docker build -t nodeapp:latest . '
       }
     }
     stage('run'){
