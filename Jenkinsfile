@@ -1,28 +1,37 @@
-pipeline{
-  agent any
-  stages{
-    stage('Checkout') {
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Amit9031/exametp.git'
+                git branch: 'main',
+                    url: 'https://github.com/Amit9031/exametp.git'
             }
         }
 
-    stage('build'){
-      steps{
-        sh 'docker build -t nodeapp:latest . '
-      }
-    }
-    stage('run'){
-      steps{
-        sh '''
-        docker stop pythonapp || true
-        docker rm pythonapp || true
+        stage('Build') {
+            steps {
+                sh 'docker build -t nodeapp:latest .'
+            }
+        }
 
-          docker run -d -p 3000:3000 -e exam=etp --name nodeapp nodeapp:latest
-        '''
-      }
-    }
-    stage('Testing') {
+        stage('Run') {
+            steps {
+                sh '''
+                    docker stop nodeapp || true
+                    docker rm nodeapp || true
+
+                    docker run -d \
+                    -p 3000:3000 \
+                    -e exam=etp \
+                    --name nodeapp \
+                    nodeapp:latest
+                '''
+            }
+        }
+
+        stage('Testing') {
             steps {
                 echo 'Testing the application'
                 sh '''
@@ -31,6 +40,6 @@ pipeline{
                 '''
             }
         }
-     
-  }
+
+    }
 }
