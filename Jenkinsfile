@@ -18,8 +18,14 @@ pipeline{
         docker stop pythonapp || true
         docker rm pythonapp || true
 
-          docker run -d -p 5000:5000 -e exam=etp --name pythonapp pythonapp:latest
+          docker run -d -p 3000:3000 -e exam=etp --name pythonapp pythonapp:latest
         '''
+      }
+    }
+     stage("testing"){
+      steps{
+        echo "testing the application"
+        sh "curl http://localhost:3000"
       }
     }
   }
