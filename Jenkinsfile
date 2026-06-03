@@ -11,13 +11,13 @@ pipeline{
       steps{
         echo "running the continer"
         sh 
-        ...
+        '''
         docker stop nodeapp || true
         docker rm nodeapp || true
         docker run -d -p 3000:3000 --name nodeapp -e etp=dev nodeapp:latest
 
 
-        ...
+        '''
       }
     }
   }
